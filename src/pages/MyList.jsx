@@ -15,7 +15,7 @@ export default function MyList() {
       {myList.length > 0 ? (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {myList.map((movie) => (
-            <MovieCard key={movie.imdbID} movie={movie} />
+            <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
       ) : (

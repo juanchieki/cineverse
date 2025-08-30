@@ -1,3 +1,58 @@
+# CineVerse
+
+## Quick deploy
+
+- Environment variables required:
+	- VITE_TMDB_API_KEY
+	- VITE_OMDB_API_KEY
+
+- Netlify
+	- Build command: vite build
+	- Publish directory: dist
+	- SPA routing: ensure `public/_redirects` contains `/*    /index.html   200`
+
+- Vercel
+	- Framework preset: Vite
+	- Build command: vite build
+	- Output directory: dist
+	- Routing: SPA handled automatically
+## Environment setup
+
+Vite only exposes variables prefixed with `VITE_` to the client.
+
+1. Create a `.env` file in the project root:
+
+```
+VITE_TMDB_API_KEY=your_tmdb_key_here
+VITE_OMDB_API_KEY=your_omdb_key_here
+```
+
+2. Restart the dev server after editing `.env` so `import.meta.env` updates.
+
+3. In code, always read via `import.meta.env.VITE_*` (do not use `process.env` in client code).
+
+Troubleshooting:
+- Ensure `.env` is at the project root (same directory as `package.json`).
+- Close and re-run `npm run dev` after changes.
+- For logs inside `vite.config.js`, `dotenv.config()` is used only for server-side checks.
+
+## Deploy (Netlify/Vercel)
+
+For Single Page App routing:
+
+- Netlify: add a `_redirects` file in `public/` with:
+
+```
+/*    /index.html   200
+```
+
+- Vercel: SPA is handled automatically. Ensure `build` = `vite build`, `output` directory is `dist`.
+
+Set environment variables in the hosting dashboard:
+- `VITE_TMDB_API_KEY`
+- `VITE_OMDB_API_KEY`
+
+Then redeploy.
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

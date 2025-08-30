@@ -1,69 +1,111 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchMovies } from "../Utils/omdb";
+import { getPosterUrl } from "../Utils/tmdb";
+import { searchMoviesWithFallback } from "../Utils/searchWithFallback";
+import ThemeToggle from "./ThemeToggle";
+import { useI18n } from "../i18n/I18nProvider";
+import { languages } from "../i18n/languages";
 
-export default function Header({ onSearch }) {
+export default function Header() {
+  const { t, lang, setLang } = useI18n();
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [hasSearched, setHasSearched] = useState(false);
+  const [sortSel, setSortSel] = useState(() => (typeof window !== 'undefined' && localStorage.getItem('cineverse-sort')) || 'relevance');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (query.trim()) {
-      onSearch(query);
-      navigate("/");
-    }
-  };
 
   const handleSearch = async () => {
     if (query.trim()) {
-      const results = await fetchMovies(query);
+  const results = await searchMoviesWithFallback(query);
       setSearchResults(results);
+  setHasSearched(true);
       console.log("Search results:", results);
     }
   };
 
   return (
-    <header className="bg-[#231f10] text-white py-4 px-6">
+    <header className="bg-[#231f10] dark:bg-[#0e0c07] text-white py-4 px-6">
       <div className="flex items-center justify-between">
         <h1 
-          className="text-2xl font-bold text-red-500 cursor-pointer"
+          className="text-2xl font-bold text-accent cursor-pointer"
           onClick={() => navigate("/")}
         >
-          CineVerse
+          {t('appTitle')}
         </h1>
         <div className="flex items-center gap-2">
           <input
             type="text"
-            placeholder="Search for movies..."
+            placeholder={t('searchPlaceholder')}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="bg-[#2c2c2c] text-white px-4 py-2 rounded-md focus:outline-none"
+            className="bg-[#2c2c2c] dark:bg-[#1f1f1f] text-white px-4 py-2 rounded-md focus:outline-none"
           />
           <button
             onClick={handleSearch}
             className="bg-accent text-primary px-4 py-2 rounded-md hover:bg-white hover:text-black transition"
           >
-            Search
+            {t('search')}
           </button>
+          <select
+            aria-label="Language"
+            value={lang}
+            onChange={(e) => setLang(e.target.value)}
+            className="px-3 py-2 rounded-md bg-secondary text-text"
+          >
+            {languages.map(l => (
+              <option key={l.code} value={l.code}>{l.label}</option>
+            ))}
+          </select>
+          <select
+            aria-label="Sort by rating"
+            value={sortSel}
+            onChange={(e) => {
+              const val = e.target.value;
+              setSortSel(val);
+              if (typeof window !== 'undefined') {
+                localStorage.setItem('cineverse-sort', val);
+                window.dispatchEvent(new CustomEvent('cineverse-sort-changed', { detail: { value: val } }));
+              }
+            }}
+            className="px-3 py-2 rounded-md bg-secondary text-text"
+          >
+            <option value="relevance">{t('sortRelevance')}</option>
+            <option value="rating-desc">{t('ratingHigh')}</option>
+            <option value="rating-asc">{t('ratingLow')}</option>
+          </select>
+          <ThemeToggle />
         </div>
       </div>
-      {searchResults.length > 0 && (
+      {(hasSearched || searchResults.length > 0) && (
         <div className="mt-4">
-          <h2 className="text-xl font-semibold mb-2">Search Results</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {searchResults.map((movie) => (
-              <div key={movie.imdbID} className="bg-[#2c2c2c] text-white p-4 rounded-md">
-                <img
-                  src={movie.Poster !== "N/A" ? movie.Poster : "https://via.placeholder.com/200x300?text=No+Poster"}
-                  alt={movie.Title}
-                  className="w-full h-[300px] object-cover rounded-md mb-2"
-                />
-                <h3 className="text-lg font-bold truncate">{movie.Title}</h3>
-                <p className="text-sm text-white/70">{movie.Year}</p>
-              </div>
-            ))}
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-xl font-semibold">{t('searchResults')}</h2>
+            <button
+              className="text-sm text-white/70 underline"
+              onClick={() => { setSearchResults([]); setHasSearched(false); setQuery(""); }}
+            >
+              {t('clear')}
+            </button>
           </div>
+          {searchResults.length > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {searchResults.map((movie) => (
+                <div key={movie.id} className="bg-[#2c2c2c] dark:bg-[#1b1b1b] text-white p-4 rounded-md hover:bg-[#3a3a3a] cursor-pointer" onClick={() => navigate(`/movie/${movie.id}`)}>
+                  <img
+                    src={movie.poster_path ? getPosterUrl(movie.poster_path) : "/fallback-poster.svg"}
+                    alt={movie.title}
+                    className="w-full h-[300px] object-cover rounded-md mb-2"
+                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/fallback-poster.svg"; }}
+                  />
+                  <h3 className="text-lg font-bold truncate">{movie.title}</h3>
+                  <p className="text-sm text-white/70">{movie.release_date ? movie.release_date.slice(0, 4) : ""}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-white/70">{t('noResults', { q: query })}</p>
+          )}
         </div>
       )}
     </header>

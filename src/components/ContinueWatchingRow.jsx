@@ -16,7 +16,7 @@ export default function ContinueWatchingRow() {
       <h2 className="text-2xl font-semibold text-accent mb-3">Continue Watching</h2>
       <div className="flex gap-4 overflow-x-scroll scrollbar-hide pb-4">
         {history.map((movie) => (
-          <MovieCard key={movie.imdbID} movie={movie} />
+          <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
     </div>
