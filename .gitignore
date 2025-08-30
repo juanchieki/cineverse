@@ -37,6 +37,7 @@ Thumbs.db
 !README.md
 !about.txt
 !.gitignore
+!.env.example
 ?# Logs
 logs
 *.log
@@ -61,3 +62,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local Netlify folder
+.netlify
