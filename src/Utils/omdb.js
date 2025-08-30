@@ -1,7 +1,7 @@
 // src/services/omdb.js
 
 
-const API_KEY = import.meta.env.VITE_OMDB_API_KEY || "5b6961f";
+const API_KEY = import.meta.env.VITE_OMDB_API_KEY || "";
 const FALLBACK_IMAGE = "https://via.placeholder.com/200x300?text=No+Poster";
 
 export const fetchMovies = async (query, type = "movie") => {
