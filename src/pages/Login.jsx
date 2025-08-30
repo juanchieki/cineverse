@@ -16,7 +16,7 @@ export default function Login() {
       // Demo-only: pretend login and persist a flag
       await new Promise((r) => setTimeout(r, 500));
       localStorage.setItem("cineverse-auth", JSON.stringify({ email, ts: Date.now() }));
-      navigate("/");
+  navigate("/home");
   } catch {
       setError("Login failed. Please try again.");
     } finally {

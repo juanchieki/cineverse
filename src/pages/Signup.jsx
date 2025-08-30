@@ -16,7 +16,7 @@ export default function Signup() {
       // Demo-only: pretend account creation
       await new Promise((r) => setTimeout(r, 700));
       localStorage.setItem("cineverse-auth", JSON.stringify({ email, ts: Date.now() }));
-      navigate("/");
+  navigate("/home");
   } catch {
       setError("Signup failed. Please try again.");
     } finally {

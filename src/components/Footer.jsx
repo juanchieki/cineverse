@@ -16,19 +16,9 @@ export default function Footer() {
         <div>
           <h4 className="font-semibold text-[12px] sm:text-base mb-1.5 sm:mb-3">Browse</h4>
           <ul className="flex gap-3 flex-wrap text-white/70 sm:block sm:space-y-2">
-            <li><Link to="/" className="hover:text-accent">Home</Link></li>
-            <li><Link to="/" className="hover:text-accent">Trending</Link></li>
+            <li><Link to="/home" className="hover:text-accent">Home</Link></li>
+            <li><Link to="/home" className="hover:text-accent">Trending</Link></li>
             <li><Link to="/movies" className="hover:text-accent">Movies</Link></li>
-            <li className="sm:hidden">
-              <a
-                href="https://github.com/juanchieki/cineverse"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-accent"
-              >
-                GitHub
-              </a>
-            </li>
           </ul>
         </div>
         <div className="hidden sm:block">
@@ -44,16 +34,6 @@ export default function Footer() {
           <ul className="space-y-1.5 sm:space-y-2 text-white/70">
             <li><a href="#" className="hover:text-accent">Twitter</a></li>
             <li><a href="#" className="hover:text-accent">Instagram</a></li>
-            <li>
-              <a
-                href="https://github.com/juanchieki/cineverse"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-accent"
-              >
-                GitHub Repo
-              </a>
-            </li>
             <li>
               <a
                 href="https://github.com/juanchieki"

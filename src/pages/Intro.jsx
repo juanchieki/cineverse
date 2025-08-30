@@ -20,7 +20,7 @@ export default function Intro() {
               <Link to="/login" className="inline-flex items-center justify-center rounded-md border border-white/20 px-4 py-2 font-medium hover:bg-white/10">
                 Log In
               </Link>
-              <Link to="/" className="inline-flex items-center justify-center rounded-md px-4 py-2 font-medium hover:bg-white/10">
+              <Link to="/home" className="inline-flex items-center justify-center rounded-md px-4 py-2 font-medium hover:bg-white/10">
                 Explore as Guest
               </Link>
             </div>

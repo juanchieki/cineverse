@@ -29,7 +29,7 @@ export default function Header() {
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h1 
           className="text-2xl font-bold text-accent cursor-pointer"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/home")}
         >
           {t('appTitle')}
         </h1>
@@ -75,6 +75,30 @@ export default function Header() {
             <option value="rating-asc">{t('ratingLow')}</option>
           </select>
           <ThemeToggle />
+          {/* Auth actions */}
+          {(() => {
+            let auth;
+            try { auth = JSON.parse(localStorage.getItem('cineverse-auth') || 'null'); } catch {}
+            if (auth?.email) {
+              return (
+                <div className="flex items-center gap-2">
+                  <span className="hidden sm:inline text-white/70 text-sm">{auth.email}</span>
+                  <button
+                    onClick={() => { localStorage.removeItem('cineverse-auth'); window.location.reload(); }}
+                    className="text-xs px-2 py-1 rounded-md border border-white/20 hover:bg-white/10"
+                  >
+                    Logout
+                  </button>
+                </div>
+              );
+            }
+            return (
+              <div className="flex items-center gap-2 text-sm">
+                <a href="/login" className="px-2 py-1 rounded-md border border-white/20 hover:bg-white/10">Log in</a>
+                <a href="/signup" className="px-2 py-1 rounded-md bg-accent text-black font-semibold hover:opacity-90">Sign up</a>
+              </div>
+            );
+          })()}
         </div>
       </div>
       {(hasSearched || searchResults.length > 0) && (
