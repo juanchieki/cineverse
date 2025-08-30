@@ -42,7 +42,7 @@ export default function MovieRow({ title, category }) {
         )}
         <div
           ref={rowRef}
-          className="flex overflow-x-auto space-x-4 scrollbar-hide pl-8 pr-8"
+          className="flex overflow-x-auto space-x-4 scrollbar-hide pl-4 pr-4 sm:pl-8 sm:pr-8"
           style={{ scrollBehavior: "smooth" }}
         >
           {movies.length > 0 ? (
@@ -53,6 +53,7 @@ export default function MovieRow({ title, category }) {
                   <img
                     src={getPosterUrl(movie.poster_path)}
                     alt={movie.title}
+                    loading="lazy"
                     className="w-full h-48 object-cover rounded-md shadow-lg transition-transform duration-200 hover:scale-105"
                     onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = FALLBACK_IMAGE; }}
                   />

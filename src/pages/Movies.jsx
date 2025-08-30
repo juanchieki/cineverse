@@ -58,22 +58,22 @@ export default function Movies() {
   }
 
   return (
-    <div className="min-h-screen bg-primary dark:bg-[#0e0c07] text-text px-8 py-12">
+  <div className="min-h-screen bg-primary dark:bg-[#0e0c07] text-text px-4 sm:px-8 py-8 sm:py-12">
       <h2 className="text-3xl font-bold mb-8 text-center">{t('movieLibrary')}</h2>
 
       {/* Search Bar */}
-      <form onSubmit={handleSearch} className="flex flex-wrap justify-center mb-8 gap-2">
+  <form onSubmit={handleSearch} className="flex flex-wrap justify-center mb-6 sm:mb-8 gap-2">
         <input
           type="text"
           name="search"
           defaultValue={query}
           placeholder={t('searchPlaceholder')}
-          className="px-4 py-2 rounded-lg bg-secondary text-text focus:outline-none w-64"
+          className="px-3 py-2 rounded-lg bg-secondary text-text focus:outline-none w-48 sm:w-64"
         />
         <select
           value={genreId}
           onChange={(e) => { setGenreId(e.target.value); setPage(1); }}
-          className="px-3 py-2 rounded-lg bg-secondary text-text focus:outline-none w-48"
+          className="px-3 py-2 rounded-lg bg-secondary text-text focus:outline-none w-40 sm:w-48"
         >
           <option value="">{t('genreAny')}</option>
           {genres.map((g) => (
@@ -85,7 +85,7 @@ export default function Movies() {
           name="year"
           defaultValue={year}
           placeholder={t('year')}
-          className="px-3 py-2 rounded-lg bg-secondary text-text focus:outline-none w-28"
+          className="px-3 py-2 rounded-lg bg-secondary text-text focus:outline-none w-24 sm:w-28"
           min="1900"
           max="2099"
         />

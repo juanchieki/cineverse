@@ -25,33 +25,33 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-[#231f10] dark:bg-[#0e0c07] text-white py-4 px-6">
-      <div className="flex items-center justify-between">
+    <header className="bg-[#231f10] dark:bg-[#0e0c07] text-white py-4 px-4 sm:px-6">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h1 
           className="text-2xl font-bold text-accent cursor-pointer"
           onClick={() => navigate("/")}
         >
           {t('appTitle')}
         </h1>
-        <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2 justify-end w-full sm:w-auto mt-2 sm:mt-0">
           <input
             type="text"
             placeholder={t('searchPlaceholder')}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="bg-[#2c2c2c] dark:bg-[#1f1f1f] text-white px-4 py-2 rounded-md focus:outline-none"
+      className="bg-[#2c2c2c] dark:bg-[#1f1f1f] text-white px-3 py-2 rounded-md focus:outline-none min-w-0 w-40 sm:w-56 md:w-64"
           />
           <button
             onClick={handleSearch}
-            className="bg-accent text-primary px-4 py-2 rounded-md hover:bg-white hover:text-black transition"
+      className="bg-accent text-primary px-4 py-2 rounded-md hover:bg-white hover:text-black transition whitespace-nowrap"
           >
             {t('search')}
           </button>
           <select
-            aria-label="Language"
+            aria-label={t('switchLanguage')}
             value={lang}
             onChange={(e) => setLang(e.target.value)}
-            className="px-3 py-2 rounded-md bg-secondary text-text"
+      className="px-3 py-2 rounded-md bg-secondary text-text w-28 sm:w-32 md:w-auto"
           >
             {languages.map(l => (
               <option key={l.code} value={l.code}>{l.label}</option>
@@ -68,7 +68,7 @@ export default function Header() {
                 window.dispatchEvent(new CustomEvent('cineverse-sort-changed', { detail: { value: val } }));
               }
             }}
-            className="px-3 py-2 rounded-md bg-secondary text-text"
+      className="px-3 py-2 rounded-md bg-secondary text-text w-36 sm:w-44 md:w-auto"
           >
             <option value="relevance">{t('sortRelevance')}</option>
             <option value="rating-desc">{t('ratingHigh')}</option>
@@ -95,10 +95,11 @@ export default function Header() {
                   <img
                     src={movie.poster_path ? getPosterUrl(movie.poster_path) : "/fallback-poster.svg"}
                     alt={movie.title}
+                    loading="lazy"
                     className="w-full h-[300px] object-cover rounded-md mb-2"
                     onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = "/fallback-poster.svg"; }}
                   />
-                  <h3 className="text-lg font-bold truncate">{movie.title}</h3>
+                  <h3 className="text-base sm:text-lg font-bold truncate">{movie.title}</h3>
                   <p className="text-sm text-white/70">{movie.release_date ? movie.release_date.slice(0, 4) : ""}</p>
                 </div>
               ))}

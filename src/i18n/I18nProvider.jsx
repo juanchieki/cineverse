@@ -150,6 +150,15 @@ export function I18nProvider({ children }) {
     localStorage.setItem(STORAGE_KEY, lang);
   }, [lang]);
 
+  // Reflect language and text direction on the <html> element for accessibility and RTL support
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = lang;
+      const rtlLangs = ['ar'];
+      document.documentElement.dir = rtlLangs.includes(lang) ? 'rtl' : 'ltr';
+    }
+  }, [lang]);
+
   const t = useMemo(() => {
     const dict = messages[lang] || messages.en;
     return (key, vars = {}) => {
