@@ -1,5 +1,38 @@
 # CineVerse
 
+## Live
+
+Production: https://cineverse-umber-three.vercel.app/
+
+## Getting started
+
+Prereqs: Node 18+ and npm.
+
+1. Install deps
+
+```
+npm install
+```
+
+2. Create `.env` in the project root with your keys (UTF-8 encoding):
+
+```
+VITE_TMDB_API_KEY=your_tmdb_key_here
+VITE_OMDB_API_KEY=your_omdb_key_here
+```
+
+3. Start the app
+
+```
+npm run dev
+```
+
+4. Build for production (optional)
+
+```
+npm run build
+```
+
 ## Quick deploy
 
 - Environment variables required:
@@ -35,6 +68,7 @@ Troubleshooting:
 - Ensure `.env` is at the project root (same directory as `package.json`).
 - Close and re-run `npm run dev` after changes.
 - For logs inside `vite.config.js`, `dotenv.config()` is used only for server-side checks.
+- Save `.env` as UTF-8 (no BOM). If you see garbled characters, recreate the file and retype the two lines above.
 
 ## Deploy (Netlify/Vercel)
 
@@ -53,6 +87,11 @@ Set environment variables in the hosting dashboard:
 - `VITE_OMDB_API_KEY`
 
 Then redeploy.
+
+## Getting API keys
+
+- TMDb: Create an account at https://www.themoviedb.org/, request an API key in settings, and use the v3 key as `VITE_TMDB_API_KEY`.
+- OMDb: Get a free API key at https://www.omdbapi.com/apikey.aspx and set it as `VITE_OMDB_API_KEY` (optional but recommended for fallback ratings).
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
