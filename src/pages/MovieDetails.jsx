@@ -45,8 +45,18 @@ export default function MovieDetails() {
 
   if (!movie) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-dark text-light">
-        <p className="text-xl">Movie details not found or failed to load.</p>
+      <div className="bg-dark dark:bg-[#0e0c07] text-white min-h-screen">
+        <div className="max-w-6xl mx-auto py-12 px-6">
+          <div className="animate-pulse grid md:grid-cols-3 gap-8">
+            <div className="h-[450px] bg-white/10 rounded-2xl border-4 border-secondary" />
+            <div className="md:col-span-2 space-y-4">
+              <div className="h-8 bg-white/10 rounded w-2/3" />
+              <div className="h-4 bg-white/10 rounded w-full" />
+              <div className="h-4 bg-white/10 rounded w-5/6" />
+              <div className="h-64 bg-white/5 rounded border-4 border-secondary" />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
