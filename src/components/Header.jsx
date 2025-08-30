@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getPosterUrl } from "../Utils/tmdb";
 import { searchMoviesWithFallback } from "../Utils/searchWithFallback";
 import ThemeToggle from "./ThemeToggle";
@@ -75,8 +75,8 @@ export default function Header() {
             <option value="rating-asc">{t('ratingLow')}</option>
           </select>
           <ThemeToggle />
-          {/* Auth actions */}
-          {(() => {
+      {/* Auth actions */}
+      {(() => {
             let auth;
             try { auth = JSON.parse(localStorage.getItem('cineverse-auth') || 'null'); } catch {}
             if (auth?.email) {
@@ -84,7 +84,7 @@ export default function Header() {
                 <div className="flex items-center gap-2">
                   <span className="hidden sm:inline text-white/70 text-sm">{auth.email}</span>
                   <button
-                    onClick={() => { localStorage.removeItem('cineverse-auth'); window.location.reload(); }}
+          onClick={() => { localStorage.removeItem('cineverse-auth'); navigate('/'); }}
                     className="text-xs px-2 py-1 rounded-md border border-white/20 hover:bg-white/10"
                   >
                     Logout
@@ -94,8 +94,8 @@ export default function Header() {
             }
             return (
               <div className="flex items-center gap-2 text-sm">
-                <a href="/login" className="px-2 py-1 rounded-md border border-white/20 hover:bg-white/10">Log in</a>
-                <a href="/signup" className="px-2 py-1 rounded-md bg-accent text-black font-semibold hover:opacity-90">Sign up</a>
+        <Link to="/login" className="px-2 py-1 rounded-md border border-white/20 hover:bg-white/10">Log in</Link>
+        <Link to="/signup" className="px-2 py-1 rounded-md bg-accent text-black font-semibold hover:opacity-90">Sign up</Link>
               </div>
             );
           })()}
